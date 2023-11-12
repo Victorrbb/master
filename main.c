@@ -3,7 +3,7 @@
 
 
 
-    int main() {
+int main() {
         ListaDeTarefas lt;
 
         char arquivo[] = "tarefas";
@@ -11,7 +11,7 @@
         int prioridadeFiltrar; // Variável para a prioridade a ser filtrada
         int estadoFiltrar; // Variável para o estado a ser filtrado
         char categoriaFiltrar[100]; // Variável para a categoria a ser filtrada
-        
+        int prioridadeExportar;
 
         codigo = carregarTarefas(&lt, arquivo);
 
@@ -25,13 +25,16 @@
             printf("lista de tarefas\n");
             printf("selecione o desejado!\n");
             printf("1 - criar tarefa\n");
-            printf("2 - vizualizar tarefas\n");
-            printf("3 - excluir tarefas\n");
+            printf("2 - exluir tarefas\n");
+            printf("3 - vizualizar tarefas\n");
             printf("4 - Alterar tarefa\n");
             printf("5 - Filtrar por prioridade\n");
             printf("6 - Filtrar por estado\n");
             printf("7 - Filtrar por categoria\n");
             printf("8 - Filtrar por prioridade e categoria\n");
+            printf("9 - Exportar por prioridade\n");
+            printf("10- Exportar por categoria e ordem\n");
+            printf("11- Exportar por prioridade categoria e ordem \n");
             printf("0 - Finalizar\n");
 
             scanf("%d", &opcao);
@@ -55,12 +58,10 @@
                     codigo = listetarefa(&lt);
                     if (codigo == 1)
                         printf("Erro ao listar tarefas: não existem tarefas para listar\n");
-                
                     break;
                 case 4:
                     alterarTarefa(&lt);
                     break;
-                    
                 case 5:
                     printf("Entre com a prioridade desejada: ");
                     scanf("%d", &prioridadeFiltrar);
@@ -92,12 +93,43 @@
                         printf("Erro ao filtrar tarefas: não existem tarefas que atendam aos critérios\n");
                     break;
 
-                    
-        
-            default:
+
+
+                case 9:
+                    printf("Entre com a prioridade desejada para exportar: ");
+                    scanf("%d", &prioridadeExportar); // Não redeclare prioridadeExportar
+                    codigo = exportarPorPrioridade(&lt, prioridadeExportar);
+
+                    if (codigo == 1)
+                        printf("Nenhuma tarefa encontrada com prioridade %d\n", prioridadeExportar);
+                    else if (codigo == 0)
+                        printf("Tarefas com prioridade %d exportadas com sucesso.\n");
+                    break;
+
+
+                case 10:
+                    printf("Entre com a categoria desejada para exportar: ");
+                    scanf("%s", categoriaFiltrar);
+                    exportarTarefasPorCategoriaOrdenadas(&lt, categoriaFiltrar, "export_categoria.txt");
+                    if (codigo == 1)
+                        printf("Nenhuma tarefa encontrada com a categoria %s\n", categoriaFiltrar);
+                    else if (codigo == 0)
+                        printf("Tarefas com categoria %s exportadas com sucesso.\n");
+                    break;
+                case 11:
+                    printf("Digite a prioridade desejada para exportar: ");
+                    scanf("%d", &prioridadeExportar);
+                    printf("Digite a categoria desejada para exportar: ");
+                    scanf("%s", categoriaFiltrar);
+                    exportarTarefasPorPrioridadeECategoriaOrdenadas(&lt, prioridadeExportar, categoriaFiltrar, "export_prioridade_categoria.txt");
+                    if (codigo == 1)
+                        printf("Erro ao exportar tarefas: não existem tarefas que atendam aos critérios\n");
+                    else if (codigo == 0)
+                        printf("Tarefas com prioridade %d e categoria %s exportadas com sucesso.\n", prioridadeExportar, categoriaFiltrar);
+                    break;
+                default:
                     printf("Opção inválida\n");
                     break;
-            
 
 
 
@@ -105,7 +137,7 @@
 
         } while (opcao != 0);
 
-        codigo = salvarTarefas(&lt, arquivo);
+        codigo = salvarTarefas(lt, arquivo);
         if (codigo != 0)
             printf("Erro ao salvar tarefas em arquivo\n");
 
