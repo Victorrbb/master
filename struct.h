@@ -3,7 +3,11 @@
 #define PROJETO3_STRUCT_H
 #define TOTAL_TAREFAS 100
 #endif //PROJETO3_STRUCT_H
-
+enum EstadoTarefa {
+    NAO_INICIADO,
+    EM_ANDAMENTO,
+    COMPLETO
+};
 typedef struct {
     int prioridade;
     char descricao[300];

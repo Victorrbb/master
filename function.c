@@ -89,3 +89,46 @@ int listetarefa(ListaDeTarefas *lt) {
     return 0;
 }
 
+void alterarTarefa(ListaDeTarefas *lt) {
+    int pos;
+    printf("Entre com a posição da tarefa que deseja alterar: ");
+    scanf("%d", &pos);
+
+    if (pos < 0 || pos >= lt->qtd) {
+        printf("Posição inválida.\n");
+        return;
+    }
+
+    int opcao;
+    printf("Escolha o campo a ser alterado:\n");
+    printf("1. Prioridade\n");
+    printf("2. Categoria\n");
+    printf("3. Descrição\n");
+    printf("4. Estado\n");
+    scanf("%d", &opcao);
+
+    tipoTarefa *t = &lt->tarefas[pos];
+
+    switch (opcao) {
+        case 1:
+            printf("Entre com a nova prioridade: ");
+            scanf("%d", &t->prioridade);
+            break;
+        case 2:
+            printf("Entre com a nova categoria: ");
+            scanf("%s", t->categoria);
+            break;
+        case 3:
+            printf("Entre com a nova descrição: ");
+            scanf("%s", t->descricao);
+            break;
+        case 4:
+            printf("Escolha o novo estado (0 - Não Iniciado, 1 - Em Andamento, 2 - Completo): ");
+            scanf("%d", &t->estado);
+            break;
+        default:
+            printf("Opção inválida.\n");
+            break;
+    }
+}
+

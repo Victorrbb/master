@@ -24,6 +24,7 @@
             printf("1 - criar tarefa\n");
             printf("2 - vizualizar tarefas\n");
             printf("3 - excluir tarefas\n");
+            printf("4 - Alterar tarefa\n");
             
             printf("0 - Finalizar\n");
 
@@ -48,7 +49,15 @@
                     codigo = listetarefa(&lt);
                     if (codigo == 1)
                         printf("Erro ao listar tarefas: não existem tarefas para listar\n");
+                
                     break;
+                case 4:
+                    alterarTarefa(&lt);
+                    break;
+
+
+                    
+        
             default:
                     printf("Opção inválida\n");
                     break;
