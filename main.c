@@ -8,6 +8,9 @@
 
         char arquivo[] = "tarefas";
         int codigo, opcao;
+        int prioridadeFiltrar; // Variável para a prioridade a ser filtrada
+        int estadoFiltrar; // Variável para o estado a ser filtrado
+        char categoriaFiltrar[100]; // Variável para a categoria a ser filtrada
         
 
         codigo = carregarTarefas(&lt, arquivo);
@@ -25,7 +28,10 @@
             printf("2 - vizualizar tarefas\n");
             printf("3 - excluir tarefas\n");
             printf("4 - Alterar tarefa\n");
-            
+            printf("5 - Filtrar por prioridade\n");
+            printf("6 - Filtrar por estado\n");
+            printf("7 - Filtrar por categoria\n");
+            printf("8 - Filtrar por prioridade e categoria\n");
             printf("0 - Finalizar\n");
 
             scanf("%d", &opcao);
@@ -54,13 +60,44 @@
                 case 4:
                     alterarTarefa(&lt);
                     break;
-
+                    
+                case 5:
+                    printf("Entre com a prioridade desejada: ");
+                    scanf("%d", &prioridadeFiltrar);
+                    codigo = filtrarPorPrioridade(&lt, prioridadeFiltrar);
+                    if (codigo == 1)
+                        printf("Nenhuma tarefa encontrada com prioridade %d\n", prioridadeFiltrar);
+                    break;
+                case 6:
+                    printf("Entre com o estado desejado (0 - Não Iniciado, 1 - Em Andamento, 2 - Completo): ");
+                    scanf("%d", &estadoFiltrar);
+                    codigo = filtrarPorEstado(&lt, estadoFiltrar);
+                    if (codigo == 1)
+                        printf("Nenhuma tarefa encontrada com estado %d\n", estadoFiltrar);
+                    break;
+                case 7:
+                    printf("Entre com a categoria desejada: ");
+                    scanf("%s", categoriaFiltrar);
+                    codigo = filtrarPorCategoria(&lt, categoriaFiltrar);
+                    if (codigo == 1)
+                        printf("Nenhuma tarefa encontrada com a categoria %s\n", categoriaFiltrar);
+                    break;
+                case 8:
+                    printf("Digite a prioridade: ");
+                    scanf("%d", &prioridadeFiltrar);
+                    printf("Digite a categoria: ");
+                    scanf("%s", categoriaFiltrar);
+                    codigo = filtrarPorPrioridadeECategoria(&lt, prioridadeFiltrar, categoriaFiltrar);
+                    if (codigo == 1)
+                        printf("Erro ao filtrar tarefas: não existem tarefas que atendam aos critérios\n");
+                    break;
 
                     
         
             default:
                     printf("Opção inválida\n");
                     break;
+            
 
 
 

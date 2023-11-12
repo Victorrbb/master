@@ -131,4 +131,124 @@ void alterarTarefa(ListaDeTarefas *lt) {
             break;
     }
 }
+int filtrarPorPrioridade(ListaDeTarefas *lt, int prioridadeFiltrar) {
+    if (lt->qtd == 0)
+        return 1;
+
+    int encontrou = 0; // Flag para verificar se foram encontradas tarefas com a prioridade desejada
+
+    printf("Tarefas com prioridade %d:\n", prioridadeFiltrar);
+    for (int i = 0; i < lt->qtd; i++) {
+        if (lt->tarefas[i].prioridade == prioridadeFiltrar) {
+            printf("Pos: %d \t Prioridade: %d \t Categoria: %s\n", i,
+                   lt->tarefas[i].prioridade, lt->tarefas[i].categoria);
+            printf("Estado: %d\n", lt->tarefas[i].estado);
+            printf("Descrição: %s\n", lt->tarefas[i].descricao);
+            encontrou = 1; // Marcamos como encontrada uma tarefa com a prioridade desejada
+        }
+    }
+
+    if (!encontrou) {
+        printf("Nenhuma tarefa encontrada com prioridade %d\n", prioridadeFiltrar);
+        return 2; // Retorna 2 para indicar que nenhuma tarefa foi encontrada
+    }
+
+    return 0;
+}
+int filtrarPorEstado(ListaDeTarefas *lt, int estadoFiltrar) {
+    if (lt->qtd == 0)
+        return 1;
+
+    int encontrou = 0; // Flag para verificar se foram encontradas tarefas com o estado desejado
+
+    printf("Tarefas com estado %d:\n", estadoFiltrar);
+    for (int i = 0; i < lt->qtd; i++) {
+        if (lt->tarefas[i].estado == estadoFiltrar) {
+            printf("Pos: %d \t Prioridade: %d \t Categoria: %s\n", i,
+                   lt->tarefas[i].prioridade, lt->tarefas[i].categoria);
+            printf("Estado: %d\n", lt->tarefas[i].estado);
+            printf("Descrição: %s\n", lt->tarefas[i].descricao);
+            encontrou = 1; // Marcamos como encontrada uma tarefa com o estado desejado
+        }
+    }
+
+    if (!encontrou) {
+        printf("Nenhuma tarefa encontrada com estado %d\n", estadoFiltrar);
+        return 2; // Retorna 2 para indicar que nenhuma tarefa foi encontrada
+    }
+
+    return 0;
+}
+int filtrarPorCategoria(ListaDeTarefas *lt, char *categoriaFiltrar) {
+    if (lt->qtd == 0)
+        return 1;
+
+    int encontrou = 0; // Flag para verificar se foram encontradas tarefas com a categoria desejada
+
+    // Crie um vetor temporário para armazenar as tarefas correspondentes à categoria
+    tipoTarefa tarefasCategoria[lt->qtd];
+    int qtdTarefasCategoria = 0;
+
+    for (int i = 0; i < lt->qtd; i++) {
+        if (strcmp(lt->tarefas[i].categoria, categoriaFiltrar) == 0) {
+            tarefasCategoria[qtdTarefasCategoria] = lt->tarefas[i];
+            qtdTarefasCategoria++;
+            encontrou = 1; // Marcamos como encontrada uma tarefa com a categoria desejada
+        }
+    }
+
+    if (!encontrou) {
+        printf("Nenhuma tarefa encontrada com a categoria %s\n", categoriaFiltrar);
+        return 2; // Retorna 2 para indicar que nenhuma tarefa foi encontrada
+    }
+
+    // Ordenar as tarefas pelo campo prioridade em ordem decrescente
+    for (int i = 0; i < qtdTarefasCategoria - 1; i++) {
+        for (int j = i + 1; j < qtdTarefasCategoria; j++) {
+            if (tarefasCategoria[i].prioridade < tarefasCategoria[j].prioridade) {
+                tipoTarefa temp = tarefasCategoria[i];
+                tarefasCategoria[i] = tarefasCategoria[j];
+                tarefasCategoria[j] = temp;
+            }
+        }
+    }
+
+    printf("Tarefas com a categoria %s (prioridade decrescente):\n", categoriaFiltrar);
+    for (int i = 0; i < qtdTarefasCategoria; i++) {
+        printf("Pos: %d \t Prioridade: %d \t Categoria: %s\n", i,
+               tarefasCategoria[i].prioridade, tarefasCategoria[i].categoria);
+        printf("Estado: %d\n", tarefasCategoria[i].estado);
+        printf("Descrição: %s\n", tarefasCategoria[i].descricao);
+    }
+
+    return 0;
+}
+int filtrarPorPrioridadeECategoria(ListaDeTarefas *lt, int prioridade, char *categoria) {
+    if (lt->qtd == 0) {
+        printf("Não existem tarefas para filtrar.\n");
+        return 1;
+    }
+
+    int encontrou = 0; // Flag para verificar se foram encontradas tarefas que atendem aos critérios
+
+    printf("Tarefas com prioridade %d e categoria %s:\n", prioridade, categoria);
+
+    for (int i = 0; i < lt->qtd; i++) {
+        if (lt->tarefas[i].prioridade == prioridade && strcmp(lt->tarefas[i].categoria, categoria) == 0) {
+            printf("Pos: %d \t Prioridade: %d \t Categoria: %s\n", i,
+                   lt->tarefas[i].prioridade, lt->tarefas[i].categoria);
+            printf("Estado: %d\n", lt->tarefas[i].estado);
+            printf("Descrição: %s\n", lt->tarefas[i].descricao);
+            encontrou = 1; // Marcamos como encontrada uma tarefa que atende aos critérios
+        }
+    }
+    if (!encontrou) {
+        printf("Nenhuma tarefa encontrada com prioridade %d e categoria %s\n", prioridade, categoria);
+        return 2; // Retorna 2 para indicar que nenhuma tarefa foi encontrada
+    }
+
+    return 0;
+}
+
+
 
