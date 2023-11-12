@@ -10,6 +10,7 @@ int carregarTarefas();
 int crietarefa(ListaDeTarefas *lt);
 int apaguetarefa(ListaDeTarefas *lt);
 int listetarefa(ListaDeTarefas *lt);
+void alterarTarefa(ListaDeTarefas *lt);
 
 
 
